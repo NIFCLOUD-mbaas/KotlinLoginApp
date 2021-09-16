@@ -2,6 +2,9 @@
 
 ![画像1](/readme-img/001.png)
 
+* 本サンプルは不具合がある場合、issue等から報告いただくようにお願いいたします
+* 作成日：2018/6（更新日：2021/6）
+
 ## 概要
 * [ニフクラ mobile backend](https://mbaas.nifcloud.com/) の『会員管理機能』を利用して、Androidアプリにログイン機能を実装したサンプルアプリです
 * 簡単な操作ですぐに [ ニフクラ mobile backend ](https://mbaas.nifcloud.com/)の機能を体験いただけます
@@ -23,8 +26,7 @@
 
 * Android Studio ver. 3.1
 * Android OS ver. 6.0
-* Android SDK v3
-  - SDK v2系だと動作しないので注意
+* Android SDK v4.0.0
 
 ※上記内容で動作確認をしています。
 
