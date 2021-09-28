@@ -24,8 +24,8 @@
 
 ## 動作環境
 
-* Android Studio ver. 3.1
-* Android OS ver. 6.0
+* Android Studio Arctic
+* Android OS ver. 11
 * Android SDK v4.0.0
 
 ※上記内容で動作確認をしています。
