@@ -24,8 +24,9 @@
 
 ## 動作環境
 
-* Android Studio Arctic
-* Android OS ver. 11
+* MacOS Big Sur 11.6 
+* Android Studio Arctic Fox 2020.3.1
+* Pixle 3 - Android 12 (Simulator)
 * Android SDK v4.0.0
 
 ※上記内容で動作確認をしています。
