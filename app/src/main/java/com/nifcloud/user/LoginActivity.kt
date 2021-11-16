@@ -60,23 +60,25 @@ class LoginActivity : AppCompatActivity() {
         val name = _nameText?.text.toString()
         val password = _passwordText?.text.toString()
 
-        // TODO: Implement your own authentication logic here.
         //ユーザ名とパスワードを指定してログインを実行
         try {
-            NCMBUser.loginInBackground(name, password) { user, e ->
-                if (e != null) {
-                    //エラー時の処理
-                    onLoginFailed()
-                    progressDialog.dismiss()
-                } else {
-                    android.os.Handler().postDelayed(
-                            {
-                                // On complete call either onLoginSuccess or onLoginFailed
-                                onLoginSuccess()
-                                // onLoginFailed();
-                                progressDialog.dismiss()
-                            }, 3000)
-                }
+            var user = NCMBUser()
+            user.userName = name
+            user.password = password
+            try{
+                user.login(user.userName,user.password)
+                android.os.Handler().postDelayed(
+                    {
+                        // On complete call either onLoginSuccess or onLoginFailed
+                        onLoginSuccess()
+                        // onLoginFailed();
+                        progressDialog.dismiss()
+                    }, 3000)
+            }
+            catch(e:NCMBException){
+                //エラー時の処理
+                onLoginFailed()
+                progressDialog.dismiss()
             }
         } catch (e: NCMBException) {
             e.printStackTrace()
