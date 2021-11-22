@@ -65,7 +65,7 @@ class SignupActivity : AppCompatActivity() {
         user.userName = name
 
         //パスワードを設定
-        user.password = "openGoma"
+        user.password = password
         try {
             user.signUp()
             android.os.Handler().postDelayed(

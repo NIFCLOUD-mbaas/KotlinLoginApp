@@ -26,7 +26,7 @@
 
 * Android Studio Arctic
 * Android OS ver. 11
-* Android SDK v4.0.0
+* Android SDK v0.1.1
 
 ※上記内容で動作確認をしています。
 
@@ -76,8 +76,10 @@ SDKはここ（[SDK リリースページ](https://github.com/NIFCloud-mbaas/ncm
   - app/build.gradleファイルに以下を追加します
 ```gradle
 dependencies {
-    compile 'com.google.code.gson:gson:2.3.1'
-    compile files('libs/NCMB.jar')
+    implementation 'com.google.code.gson:gson:2.3.1'
+    implementation files('libs/NCMB.jar')
+    //同期処理を使用する場合はこちらを追加していただく必要があります
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
 }
 ```
   - androidManifestの設定
@@ -126,7 +128,6 @@ dependencies {
 ```kotlin
 import com.nifcloud.mbaas.core.NCMB
 import com.nifcloud.mbaas.core.NCMBUser
-import com.nifcloud.mbaas.core.NCMBException
 ```
 
 ### SDKの初期化
@@ -153,16 +154,13 @@ fun signup() {
     // TODO: Implement your own signup logic here.
     //NCMBUserのインスタンスを作成
     val user = NCMBUser()
-    //ユーザ名を設定
-    user.userName = name
-    //パスワードを設定
-    user.setPassword(password)
-    //設定したユーザ名とパスワードで会員登録を行う
-    user.signUpInBackground { e ->
-        if (e != null) {
-            //会員登録時にエラーが発生した場合の処理
-            onSignupFailed()
-        } else {
+        //ユーザ名を設定
+        user.userName = name
+
+        //パスワードを設定
+        user.password = password
+        try {
+            user.signUp()
             android.os.Handler().postDelayed(
                 {
                     // On complete call either onSignupSuccess or onSignupFailed
@@ -172,7 +170,11 @@ fun signup() {
                     progressDialog.dismiss()
                 }, 3000)
         }
-    }
+        catch(e: NCMBException){
+            //会員登録時にエラーが発生した場合の処理
+            onSignupFailed()
+            progressDialog.dismiss()
+        }
 }
 ```
 
@@ -187,36 +189,39 @@ fun login() {
     // TODO: Implement your own authentication logic here.
     //ユーザ名とパスワードを指定してログインを実行
     try {
-        NCMBUser.loginInBackground(name, password) { user, e ->
-            if (e != null) {
+            var user = NCMBUser()
+            user.userName = name
+            user.password = password
+            try{
+                user.login(user.userName,user.password)
+                android.os.Handler().postDelayed(
+                    {
+                        // On complete call either onLoginSuccess or onLoginFailed
+                        onLoginSuccess()
+                        // onLoginFailed();
+                        progressDialog.dismiss()
+                    }, 3000)
+            }
+            catch(e:NCMBException){
                 //エラー時の処理
                 onLoginFailed()
-            } else {
-                android.os.Handler().postDelayed(
-                        {
-                            // On complete call either onLoginSuccess or onLoginFailed
-                            onLoginSuccess()
-                            // onLoginFailed();
-                            progressDialog.dismiss()
-                        }, 3000)
+                progressDialog.dismiss()
             }
+        } catch (e: NCMBException) {
+            e.printStackTrace()
         }
-    } catch (e: NCMBException) {
-        e.printStackTrace()
-    }
 
 }
 ```
 
 ### ログアウト
 
-* `NCMBUser` クラスが提供する `loginInBackground` メソッドを利用し、ログアウトを行います（非同期処理）
+* `NCMBUser` クラスが提供する `logout` メソッドを利用し、ログアウトを行います（非同期処理）
 
 ```kotlin
-NCMBUser.logoutInBackground { e ->
-    if (e != null) {
-        //エラー時の処理
-    }
+var user = NCMBUser()
+if (user != null && user.getCurrentUser() != null) {
+    user.logout()
 }
 ```
 
