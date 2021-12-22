@@ -26,7 +26,7 @@
 
 * Android Studio Arctic
 * Android OS ver. 11
-* Android SDK v0.1.1
+* KotlinSDK v0.1.1
 
 ※上記内容で動作確認をしています。
 
