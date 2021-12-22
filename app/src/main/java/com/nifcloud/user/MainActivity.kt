@@ -39,10 +39,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (id == R.id.action_logout) {
-            NCMBUser.logoutInBackground { e ->
-                if (e != null) {
-                    //エラー時の処理
-                }
+            var user = NCMBUser()
+            if (user != null && user.getCurrentUser() != null) {
+                user.logout()
             }
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

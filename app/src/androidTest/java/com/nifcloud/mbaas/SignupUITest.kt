@@ -12,10 +12,13 @@ import androidx.test.filters.LargeTest
 import com.nifcloud.user.MainActivity
 import com.nifcloud.user.R
 import org.junit.Before
+import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class SignupUITest {
@@ -42,7 +45,7 @@ class SignupUITest {
     }
 
     @Test
-    fun initialScreen() {
+    fun test01_initialScreen() {
         ivLogo!!.check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         edtName!!.check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         edtPass!!.check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
@@ -51,7 +54,7 @@ class SignupUITest {
     }
 
     @Test
-    fun validate_empty_user_name() {
+    fun test02_validate_empty_user_name() {
         edtName!!.perform(ViewActions.typeText(""))
         edtPass!!.perform(ViewActions.typeText("123456"), ViewActions.closeSoftKeyboard())
         btnSignup!!.perform(ViewActions.scrollTo()).perform(ViewActions.click())
@@ -59,7 +62,7 @@ class SignupUITest {
     }
 
     @Test
-    fun validate_less_user_name_length() {
+    fun test03_validate_less_user_name_length() {
         edtName!!.perform(ViewActions.typeText("ho"))
         edtPass!!.perform(ViewActions.typeText("123456"), ViewActions.closeSoftKeyboard())
         btnSignup!!.perform(ViewActions.scrollTo()).perform(ViewActions.click())
@@ -67,7 +70,7 @@ class SignupUITest {
     }
 
     @Test
-    fun validate_empty_pass() {
+    fun test04_validate_empty_pass() {
         edtName!!.perform(ViewActions.typeText("hoge"))
         edtPass!!.perform(ViewActions.typeText(""), ViewActions.closeSoftKeyboard())
         btnSignup!!.perform(ViewActions.scrollTo()).perform(ViewActions.click())
@@ -75,7 +78,7 @@ class SignupUITest {
     }
 
     @Test
-    fun validate_less_pass_length() {
+    fun test05_validate_less_pass_length() {
         edtName!!.perform(ViewActions.typeText("hoge"))
         edtPass!!.perform(ViewActions.typeText("123"), ViewActions.closeSoftKeyboard())
         btnSignup!!.perform(ViewActions.scrollTo()).perform(ViewActions.click())
@@ -83,7 +86,7 @@ class SignupUITest {
     }
 
     @Test
-    fun validate_over_pass_length() {
+    fun test06_validate_over_pass_length() {
         edtName!!.perform(ViewActions.typeText("hoge"))
         edtPass!!.perform(ViewActions.typeText("12345678901"), ViewActions.closeSoftKeyboard())
         btnSignup!!.perform(ViewActions.scrollTo()).perform(ViewActions.click())
@@ -91,7 +94,7 @@ class SignupUITest {
     }
 
     @Test
-    fun openLogin() {
+    fun test07_openLogin() {
         tvLinkLogin!!.perform(ViewActions.scrollTo()).perform(ViewActions.click())
         Espresso.onView(withId(R.id.btn_login))
             .check(ViewAssertions.matches(ViewMatchers.withText("Login")))
@@ -99,7 +102,7 @@ class SignupUITest {
 
     @Test
     @Throws(InterruptedException::class)
-    fun doLogin() {
+    fun test08_doLogin() {
         edtName!!.perform(ViewActions.typeText("Hoge"))
         edtPass!!.perform(ViewActions.typeText("123456"), ViewActions.closeSoftKeyboard())
         btnSignup!!.perform(ViewActions.click())
