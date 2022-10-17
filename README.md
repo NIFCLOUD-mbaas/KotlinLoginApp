@@ -24,9 +24,10 @@
 
 ## 動作環境
 
-* Android Studio Arctic
-* Android OS ver. 11
-* KotlinSDK v0.1.1
+* MacOS Monterey version 12.5
+* Android Studio Chipmunk | 2021.2.1 Patch 2
+* Pixel 2 - Android 13 (Simulator)
+* KotlinSDK v1.2.0
 
 ※上記内容で動作確認をしています。
 
@@ -65,10 +66,10 @@
 
 ### 3. SDKの導入（実装済み）
 
-※このサンプルアプリには既にSDKが実装済み（下記手順）となっています。（ver.3.0.0)<br>　最新版をご利用の場合は入れ替えてご利用ください。
+※このサンプルアプリには既にSDKが実装済み（下記手順）となっています。（ver.1.2.0)<br>　最新版をご利用の場合は入れ替えてご利用ください。
 
 * SDKダウンロード
-SDKはここ（[SDK リリースページ](https://github.com/NIFCloud-mbaas/ncmb_android/releases)）から取得してください.
+SDKはここ（[SDK リリースページ](https://github.com/NIFCLOUD-mbaas/ncmb_kotlin/releases)）から取得してください.
   - NCMB.jarファイルがダウンロードします。
 * SDKをインポート
   - app/libsフォルダにNCMB.jarをコピーします
@@ -76,8 +77,10 @@ SDKはここ（[SDK リリースページ](https://github.com/NIFCloud-mbaas/ncm
   - app/build.gradleファイルに以下を追加します
 ```gradle
 dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:4.8.1'
     implementation 'com.google.code.gson:gson:2.3.1'
-    implementation files('libs/NCMB.jar')
+    api files('libs/NCMB.jar')
+
     //同期処理を使用する場合はこちらを追加していただく必要があります
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
 }
